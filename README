@@ -1,0 +1,18 @@
+README for Tetrahedrosaur 1.0.0-rc1
+
+Tetrahedrosaur is an experimental software that allows user to create various 
+3D shapes via selective breeding. It uses genetic instructions to grow virtual 
+organism from a single tetrahedral cell. The primary goal of the program is to 
+demonstrate how genetic algorithms work.
+
+Tetrahedrosaur is written in C++ and uses boost, GLEW and Qt libraries.
+
+This program is free software. It is published under GNU General Public License 
+v3 or later. See the license for more details.
+
+All SVG and PNG images in this project are created by the author of 
+Tetrahedrosaur and published under a Creative Commons Attribution 3.0 license 
+(CC-BY 3.0), unless a different author or license is specified.
+
+
+Copyright (C) 2015 Andrey Timashov

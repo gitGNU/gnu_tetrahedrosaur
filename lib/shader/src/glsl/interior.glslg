@@ -1,0 +1,52 @@
+/***************************************************************************
+ *   Copyright (C) 2015 Andrey Timashov                                    *
+ *                                                                         *
+ *   This file is part of Tetrahedrosaur.                                  *
+ *                                                                         *
+ *   Tetrahedrosaur is free software: you can redistribute it and/or       *
+ *   modify it under the terms of the GNU General Public License as        *
+ *   published by the Free Software Foundation, either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ *   Tetrahedrosaur is distributed in the hope that it will be useful,     *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU      *
+ *   General Public License for more details.                              *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with Tetrahedrosaur. If not, see <http://www.gnu.org/licenses/> *
+ ***************************************************************************/
+
+
+#version 150
+
+layout(points​) in;
+in int vertexID[];
+layout(line_strip, max_vertices = 128) out; // FIXME 64 connection max
+uniform mat4 MVPMatrix;
+uniform isamplerBuffer staticVertexSampler;
+uniform isamplerBuffer connectionSampler;
+uniform samplerBuffer dynamicVertexSampler;
+
+void main()
+{
+   for(int i = 0; i < gl_in.length(); ++ i)
+   {
+      int next = texelFetch(staticVertexSampler, vertexID[i]).x;
+      for (int j = 0; next >= 0 && j < 65535; ++ j)
+      {
+         ivec4 curr = texelFetch(connectionSampler, next);
+
+         gl_Position = MVPMatrix * gl_in[i].gl_Position;
+         EmitVertex();
+
+         vec3 v2 = texelFetch(dynamicVertexSampler, 3 * curr.x).xyz;
+         gl_Position = MVPMatrix * vec4(v2, 1.0);
+         EmitVertex();
+
+         EndPrimitive();
+
+         next = curr.w;
+      }
+   }
+}
