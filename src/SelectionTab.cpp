@@ -22,23 +22,32 @@
 
 
 static const char * _context = "SelectionTab";
-static const char * _mate = QT_TRANSLATE_NOOP("SelectionTab", "Mate");
+static const char * _mateLow = QT_TRANSLATE_NOOP("SelectionTab", "Mate with low mutation rate");
+static const char * _mateMedium = QT_TRANSLATE_NOOP("SelectionTab", "Mate with medium mutation rate");
+static const char * _mateHigh = QT_TRANSLATE_NOOP("SelectionTab", "Mate with high mutation rate");
+static const char * _mateCustom = QT_TRANSLATE_NOOP("SelectionTab", "Mate with custom mutation rate");
+static const char * _setCustomMutationRate = QT_TRANSLATE_NOOP("SelectionTab", "Set custom mutation rate");
 static const char * _clearOffspringsButton = QT_TRANSLATE_NOOP("SelectionTab", "Clear offsprings");
+static const char * _customMutationRate = QT_TRANSLATE_NOOP("SelectionTab", "Custom mutation rate");
 
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QToolButton>
 
 #include "Application.hpp"
 #include "FigureViewport.hpp"
 #include "GuiOrganismDesc.hpp"
+#include "MainWindow.hpp"
 #include "MatingWidget.hpp"
+#include "MutationParamsDialog.hpp"
 #include "OffspringModel.hpp"
 #include "PopulationView.hpp"
 #include "Project.hpp"
 #include "SelectionTab.hpp"
+#include "translation.hpp"
 
 
 SelectionTab::SelectionTab(QWidget * parent)
@@ -47,10 +56,14 @@ SelectionTab::SelectionTab(QWidget * parent)
    m_offspringModel(0),
    m_offspringView(0),
    m_matingWidget(0),
-   m_mateButton(0),
+   m_mateLowButton(0),
+   m_mateMediumButton(0),
+   m_mateHighButton(0),
+   m_mateCustomButton(0),
    m_clearOffspringsButton(0),
    m_viewport(0),
-   m_previewFigureCausedByClearSelection(false)
+   m_previewFigureCausedByClearSelection(false),
+   m_customMutationParams(bio::MutationParams::medium())
 {
    m_project = Application::project();
    m_offspringModel = new OffspringModel(this);
@@ -58,23 +71,30 @@ SelectionTab::SelectionTab(QWidget * parent)
 
    QHBoxLayout * toolBarLayout = new QHBoxLayout();
 
-   { // Create start button;
-      m_mateButton = new QToolButton(this);
-      m_mateButton->setIcon(
-         QApplication::style()->standardIcon(QStyle::SP_MediaPlay)
-      );
-      m_mateButton->setText(QCoreApplication::translate(_context, _mate));
-      toolBarLayout->addWidget(m_mateButton);
-   }
+   m_mateLowButton = createToolButton(QIcon(":/egg_low.png"), _mateLow);
+   m_mateMediumButton = createToolButton(QIcon(":/egg_medium.png"), _mateMedium);
+   m_mateHighButton = createToolButton(QIcon(":/egg_high.png"), _mateHigh);
+   m_mateCustomButton = createToolButton(QIcon(":/egg_custom.png"), _mateCustom);
+
+   QMenu * mateCustomMenu = new QMenu(m_mateCustomButton);
+   mateCustomMenu->addAction(
+      TSLC(_setCustomMutationRate),
+      this, SLOT(setCustomMutationParams())
+   );
+   m_mateCustomButton->setPopupMode(QToolButton::MenuButtonPopup);
+   m_mateCustomButton->setMenu(mateCustomMenu);
+
+   toolBarLayout->addWidget(m_mateLowButton);
+   toolBarLayout->addWidget(m_mateMediumButton);
+   toolBarLayout->addWidget(m_mateHighButton);
+   toolBarLayout->addWidget(m_mateCustomButton);
 
    { // Create clear offsprings button;
       m_clearOffspringsButton = new QToolButton(this);
       m_clearOffspringsButton->setIcon(
          QApplication::style()->standardIcon(QStyle::SP_TrashIcon)
       );
-      m_clearOffspringsButton->setText(
-         QCoreApplication::translate(_context, _clearOffspringsButton)
-      );
+      m_clearOffspringsButton->setText(TSLC(_clearOffspringsButton));
       toolBarLayout->addWidget(m_clearOffspringsButton);
    }
 
@@ -104,7 +124,10 @@ SelectionTab::SelectionTab(QWidget * parent)
       m_offspringView, SLOT(scrollToIndex(const QModelIndex &))
    );
    connect(m_offspringModel, SIGNAL(finished()), SLOT(updateState()));
-   connect(m_mateButton, SIGNAL(clicked()), SLOT(mate()));
+   connect(m_mateLowButton, SIGNAL(clicked()), SLOT(mateLow()));
+   connect(m_mateMediumButton, SIGNAL(clicked()), SLOT(mateMedium()));
+   connect(m_mateHighButton, SIGNAL(clicked()), SLOT(mateHigh()));
+   connect(m_mateCustomButton, SIGNAL(clicked()), SLOT(mateCustom()));
    connect(m_clearOffspringsButton, SIGNAL(clicked()), SLOT(clearOffsprings()));
    connect(
       m_projectView,
@@ -128,16 +151,40 @@ SelectionTab::~SelectionTab()
 }
 
 
-void SelectionTab::mate()
+void SelectionTab::mateLow()
 {
-   if (m_offspringModel->isReady())
+   mate(bio::MutationParams::low());
+}
+
+
+void SelectionTab::mateMedium()
+{
+   mate(bio::MutationParams::medium());
+}
+
+
+void SelectionTab::mateHigh()
+{
+   mate(bio::MutationParams::high());
+}
+
+
+void SelectionTab::mateCustom()
+{
+   mate(m_customMutationParams);
+}
+
+
+void SelectionTab::setCustomMutationParams()
+{
+   MutationParamsDialog dialog(
+      m_customMutationParams,
+      Application::instance()->mainWindow()
+   );
+   dialog.setWindowTitle(TSLC(_customMutationRate));
+   if (dialog.exec() == QDialog::Accepted)
    {
-      const auto offsprings = m_matingWidget->mate(1);
-      if (!offsprings.empty())
-      {
-         m_offspringModel->append(offsprings);
-         updateState();
-      }
+      m_customMutationParams = dialog.mutationParams();
    }
 }
 
@@ -154,7 +201,7 @@ void SelectionTab::clearOffsprings()
 void SelectionTab::updateState()
 {
    const bool isReady = m_offspringModel->isReady();
-   m_mateButton->setEnabled(isReady);
+   m_mateLowButton->setEnabled(isReady);
 }
 
 
@@ -204,6 +251,33 @@ void SelectionTab::previewFigure()
             m_previewFigureCausedByClearSelection = true;
             m_projectView->clearSelection();
          }
+      }
+   }
+}
+
+
+QToolButton * SelectionTab::createToolButton(
+   const QIcon & icon,
+   const char * tip
+)
+{
+   QToolButton * button = new QToolButton(this);
+   button->setIcon(icon);
+   button->setIconSize(QSize(22, 22));
+   button->setToolTip(TSLC(tip));
+   return button;
+}
+
+
+void SelectionTab::mate(const bio::MutationParams & mutationParams)
+{
+   if (m_offspringModel->isReady())
+   {
+      const auto offsprings = m_matingWidget->mate(1, mutationParams);
+      if (!offsprings.empty())
+      {
+         m_offspringModel->append(offsprings);
+         updateState();
       }
    }
 }

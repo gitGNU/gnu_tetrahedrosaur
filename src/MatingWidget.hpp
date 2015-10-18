@@ -36,6 +36,11 @@ QT_FORWARD_DECLARE_CLASS(QPushButton)
 struct GuiOrganismDesc;
 
 
+namespace bio {
+struct MutationParams;
+}
+
+
 /***************************************************************************
  *   MatingWidget class declaration                                        *
  ***************************************************************************/
@@ -54,7 +59,10 @@ class MatingWidget : public QWidget
       void setLeftParent(boost::shared_ptr<const GuiOrganismDesc> leftParent);
       void setRightParent(boost::shared_ptr<const GuiOrganismDesc> rightParent);
 
-      std::vector<boost::shared_ptr<GuiOrganismDesc> > mate(size_t count) const;
+      std::vector<boost::shared_ptr<GuiOrganismDesc> > mate(
+         size_t count,
+         const bio::MutationParams & params
+      ) const;
 
    public slots:
       void clear();

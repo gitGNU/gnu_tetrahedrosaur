@@ -30,7 +30,7 @@ static const char * _unsavedChangesQuestion = QT_TRANSLATE_NOOP("MainWindow", "P
 static const char * _projectFileType = QT_TRANSLATE_NOOP("MainWindow", "Tetrahedrosaur project (*.tzv)");
 static const char * _tetrahedrosaur = QT_TRANSLATE_NOOP("MainWindow", "Tetrahedrosaur");
 static const char * _aboutTetrahedrosaur = QT_TRANSLATE_NOOP("MainWindow", "About Tetrahedrosaur");
-static const char * _aboutText = QT_TRANSLATE_NOOP("MainWindow", "<h3>Tetrahedrosaur 1.0.0-rc2</h3>"
+static const char * _aboutText = QT_TRANSLATE_NOOP("MainWindow", "<h3>Tetrahedrosaur 1.0.0-rc3</h3>"
    "<p>Tetrahedrosaur is an experimental software that allows user to create various "
    "3D shapes via selective breeding. It uses genetic instructions to grow virtual "
    "organism from a single tetrahedral cell. The primary goal of the program is to "
@@ -40,7 +40,6 @@ static const char * _aboutText = QT_TRANSLATE_NOOP("MainWindow", "<h3>Tetrahedro
    "<p>Copyright (C) 2015 Andrey Timashov</p>");
 
 
-#include <QtCore/QCoreApplication>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -56,6 +55,7 @@ static const char * _aboutText = QT_TRANSLATE_NOOP("MainWindow", "<h3>Tetrahedro
 #include "Project.hpp"
 #include "ProjectLoadingDialog.hpp"
 #include "SelectionTab.hpp"
+#include "translation.hpp"
 
 
 namespace {
@@ -68,9 +68,8 @@ QMessageBox::StandardButton _askAboutUnsavedChanges(
 {
    return QMessageBox::warning(
       parent,
-      QCoreApplication::translate(_context, _unsavedChanges),
-      QString(QCoreApplication::translate(_context, _unsavedChangesQuestion))
-         .arg(projectName),
+      TSLC(_unsavedChanges),
+      QString(TSLC(_unsavedChangesQuestion)).arg(projectName),
       QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
       QMessageBox::Save
    );
@@ -207,9 +206,7 @@ void MainWindow::openProject()
    {
       QFileDialog dialog(this);
       dialog.setFileMode(QFileDialog::ExistingFile);
-      dialog.setNameFilter(
-         QCoreApplication::translate(_context, _projectFileType)
-      );
+      dialog.setNameFilter(TSLC(_projectFileType));
 
       if (dialog.exec() == QDialog::Accepted)
       {
@@ -254,11 +251,7 @@ void MainWindow::saveProjectAs()
 
 void MainWindow::about()
 {
-   QMessageBox::about(
-      this,
-      QCoreApplication::translate(_context, _aboutTetrahedrosaur),
-      QCoreApplication::translate(_context, _aboutText)
-   );
+   QMessageBox::about(this, TSLC(_aboutTetrahedrosaur), TSLC(_aboutText));
 }
 
 
@@ -281,7 +274,7 @@ void MainWindow::updateWindowTitle()
       }
       title += " - ";
    }
-   setWindowTitle(title + QCoreApplication::translate(_context, _tetrahedrosaur));
+   setWindowTitle(title + TSLC(_tetrahedrosaur));
 }
 
 
@@ -396,9 +389,7 @@ bool MainWindow::helpSaveProject(bool saveAs)
       QFileDialog dialog(this);
       dialog.setAcceptMode(QFileDialog::AcceptSave);
       dialog.setFileMode(QFileDialog::AnyFile);
-      dialog.setNameFilter(
-         QCoreApplication::translate(_context, _projectFileType)
-      );
+      dialog.setNameFilter(TSLC(_projectFileType));
 
       if (dialog.exec() == QDialog::Accepted)
       {

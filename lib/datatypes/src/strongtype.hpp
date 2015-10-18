@@ -22,6 +22,9 @@
 #define DATATYPES_STRONGTYPE_HPP
 
 
+#include <ostream>
+
+
 #define STRONGTYPE_DECLARATION(_WeakType, _StrongType) \
    class _StrongType \
    { \
@@ -44,6 +47,11 @@
       private: \
          _WeakType m_value; \
    }; \
+   inline std::ostream & operator<<(std::ostream & os, const _StrongType & st) \
+   { \
+      os << st.get(); \
+      return os; \
+   }
 
 
 #endif

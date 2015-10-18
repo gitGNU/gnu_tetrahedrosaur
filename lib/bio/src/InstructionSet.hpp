@@ -39,6 +39,7 @@ namespace bio {
 
 
 struct Config;
+struct MutationParams;
 
 
 enum InstructionType
@@ -123,7 +124,7 @@ class Instruction
       static const Desc & descriptor(Opcode opcode);
       static size_t instructionCount();
 
-      Instruction mutated() const;
+      Instruction mutated(const MutationParams & params) const;
 
       inline uint8_t cmd() const {return m_cmd;}
       inline dt::Int8 i8() const {return dt::Int8(m_u8);}

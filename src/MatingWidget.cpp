@@ -21,6 +21,7 @@
 #include <QtCore/QtGlobal>
 
 
+static const char * _context = "MatingWidget";
 static const char * _clear = QT_TRANSLATE_NOOP("MatingWidget", "Clear");
 static const char * _swap = QT_TRANSLATE_NOOP("MatingWidget", "Swap");
 
@@ -32,6 +33,7 @@ static const char * _swap = QT_TRANSLATE_NOOP("MatingWidget", "Swap");
 
 #include "GuiOrganismDesc.hpp"
 #include "MatingWidget.hpp"
+#include "translation.hpp"
 
 
 #include "bio/Config.hpp"
@@ -68,13 +70,13 @@ MatingWidget::MatingWidget(QWidget * parent)
    );
    m_clearButton->setFlat(true);
    m_clearButton->setFocusPolicy(Qt::NoFocus);
-   m_clearButton->setToolTip(tr(_clear));
+   m_clearButton->setToolTip(TSLC(_clear));
    m_clearButton->setGeometry(0, 102, 26, 26);
 
    m_swapButton = new QPushButton(QIcon(":/swap.png"), QString(), this);
    m_swapButton->setFlat(true);
    m_swapButton->setFocusPolicy(Qt::NoFocus);
-   m_swapButton->setToolTip(tr(_swap));
+   m_swapButton->setToolTip(TSLC(_swap));
    m_swapButton->setGeometry(102, 0, 26, 26);
 
    connect(m_clearButton, SIGNAL(clicked()), SLOT(clear()));
@@ -114,7 +116,8 @@ void MatingWidget::setRightParent(
 
 
 std::vector<boost::shared_ptr<GuiOrganismDesc> > MatingWidget::mate(
-   size_t count
+   size_t count,
+   const bio::MutationParams & params
 ) const
 {
    std::vector<boost::shared_ptr<const bio::OrganismDesc> > parents;
@@ -136,9 +139,10 @@ std::vector<boost::shared_ptr<GuiOrganismDesc> > MatingWidget::mate(
       {
          boost::shared_ptr<GuiOrganismDesc> desc(new GuiOrganismDesc());
          desc->initialConditions.cellLimit = 100;
-         desc->initialConditions.applyMutations();
+         desc->initialConditions.applyMutations(params);
          desc->genome.reset(new bio::Genome(
-            boost::shared_ptr<const bio::Config>(new bio::Config())
+            boost::shared_ptr<const bio::Config>(new bio::Config()),
+            params
          ));
          result.push_back(desc);
       }
@@ -149,7 +153,8 @@ std::vector<boost::shared_ptr<GuiOrganismDesc> > MatingWidget::mate(
          parents,
          _createGuiOrganismDesc, // TODO: use lambda;
          count,
-         boost::shared_ptr<const bio::Config>(new bio::Config())
+         boost::shared_ptr<const bio::Config>(new bio::Config()),
+         params
       ));
       result.reserve(offsprings.size());
       for (boost::shared_ptr<bio::OrganismDesc> offspring : offsprings)

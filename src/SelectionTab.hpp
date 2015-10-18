@@ -38,6 +38,9 @@ class PopulationView;
 class Project;
 
 
+#include "bio/MutationParams.hpp"
+
+
 class SelectionTab : public MainWindowTab
 {
    Q_OBJECT
@@ -47,7 +50,11 @@ class SelectionTab : public MainWindowTab
       virtual ~SelectionTab();
 
    private slots:
-      void mate();
+      void mateLow();
+      void mateMedium();
+      void mateHigh();
+      void mateCustom();
+      void setCustomMutationParams();
       void clearOffsprings();
       void updateState();
       void setMate(const QModelIndex & index);
@@ -55,15 +62,22 @@ class SelectionTab : public MainWindowTab
       void previewFigure();
 
    private:
+      QToolButton * createToolButton(const QIcon & icon, const char * tip);
+      void mate(const bio::MutationParams & mutationParams);
+
       boost::shared_ptr<Project> m_project;
       PopulationView * m_projectView;
       OffspringModel * m_offspringModel;
       PopulationView * m_offspringView;
       MatingWidget * m_matingWidget;
-      QToolButton * m_mateButton;
+      QToolButton * m_mateLowButton;
+      QToolButton * m_mateMediumButton;
+      QToolButton * m_mateHighButton;
+      QToolButton * m_mateCustomButton;
       QToolButton * m_clearOffspringsButton;
       FigureViewport * m_viewport;
       bool m_previewFigureCausedByClearSelection;
+      bio::MutationParams m_customMutationParams;
 };
 
 

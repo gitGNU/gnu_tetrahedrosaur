@@ -28,6 +28,7 @@ set(HEADERS
    InitialConditions.hpp
    InstructionSet.hpp
    mating.hpp
+   MutationParams.hpp
    Organism.hpp
    OrganismDesc.hpp
    RangeCondition.hpp
@@ -45,6 +46,7 @@ set(SOURCES
    InitialConditions.cpp
    InstructionSet.cpp
    mating.cpp
+   MutationParams.cpp
    Organism.cpp
    OrganismDesc.cpp
    TetrahedronsMap.cpp

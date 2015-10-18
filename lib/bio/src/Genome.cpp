@@ -31,6 +31,7 @@
 #include "GeneInitializer.hpp"
 #include "Genome.hpp"
 #include "InstructionSet.hpp"
+#include "MutationParams.hpp"
 
 
 namespace bio {
@@ -59,10 +60,12 @@ float _symmetricCompare(
  ***************************************************************************/
 
 
-Genome::Genome(boost::shared_ptr<const Config> config)
-   : m_config(config)
+Genome::Genome(
+   boost::shared_ptr<const Config> config,
+   const MutationParams & mutationParams
+) : m_config(config)
 {
-   const size_t codeSize = rand() % 128;
+   const size_t codeSize = 1 + (rand() % mutationParams.maxCodeSize);
    std::vector<Instruction> code;
    code.reserve(codeSize);
    for (size_t i = 0; i < codeSize; ++i)
@@ -207,7 +210,9 @@ boost::shared_ptr<const Config> Genome::config() const
 }
 
 
-std::vector<Chromosome> Genome::makeHaploid() const
+std::vector<Chromosome> Genome::makeHaploid(
+   const MutationParams & mutationParams
+) const
 {
    std::vector<Chromosome> haploid;
    haploid.reserve(m_pairs.size());
@@ -224,22 +229,24 @@ std::vector<Chromosome> Genome::makeHaploid() const
          auto codePair = crossOver(
             codeLeft, codeRight,
             algo::Alignment(codeLeft, codeRight, InstructionEquals(m_config)),
-            algo::UniformUInt16RandomGenerator(64)
+            algo::UniformUInt16RandomGenerator(
+               mutationParams.maxDistanceBetweenCrossingPoints
+            )
          );
          Chromosome chromosome(codePair.first);
-         chromosome.applyMutations();
+         chromosome.applyMutations(mutationParams);
          haploid.push_back(std::move(chromosome));
       }
       else
       {
          Chromosome chromosome(codeLeft);
-         chromosome.applyMutations();
+         chromosome.applyMutations(mutationParams);
          haploid.push_back(std::move(chromosome));
       }
    }
 
    const size_t count = haploid.size();
-   if ((count > 1) && ((rand() % 100) < 5))
+   if ((count > 1) && mutationParams.chromosomeDeletion.random())
    {
       haploid.erase(haploid.begin() + (rand() % count));
    }

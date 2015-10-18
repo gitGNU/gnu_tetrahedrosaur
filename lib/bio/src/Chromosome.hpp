@@ -33,6 +33,9 @@
 namespace bio {
 
 
+struct MutationParams;
+
+
 /***************************************************************************
  *   Chromosome class declaration                                          *
  ***************************************************************************/
@@ -47,7 +50,7 @@ class Chromosome
 
       inline const std::vector<Instruction> & code() const;
 
-      void applyMutations();
+      void applyMutations(const MutationParams & params);
 
    private:
       std::vector<Instruction> m_code;

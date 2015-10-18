@@ -29,15 +29,19 @@
 namespace bio {
 
 
+struct MutationParams;
+
+
 struct InitialConditions
 {
    explicit InitialConditions();
    explicit InitialConditions(
       const InitialConditions & left,
-      const InitialConditions & right
+      const InitialConditions & right,
+      const MutationParams & mutationParams
    );
 
-   void applyMutations();
+   void applyMutations(const MutationParams & params);
 
    uint16_t cellLimit;
    int16_t x;

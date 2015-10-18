@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="280"
+   height="192"
+   id="svg3856"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="Tetrahedrosaur.svg">
+  <title
+     id="title2985">Tetrahedrosaur logo</title>
+  <defs
+     id="defs3858" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-195.75306"
+     inkscape:cy="111.93922"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="993"
+     inkscape:window-x="0"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3861">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Tetrahedrosaur logo</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andrey Timashov</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-860.36218)">
+    <path
+       style="fill:#a8a8a8;fill-opacity:1;stroke:none"
+       d="m 61.964938,926.33319 c 4.6777,-3.48131 1.02398,-32.43442 6.03506,-33.97101 7.30423,-2.23976 17.8889,26.02305 26.7467,28.42492 7.206962,1.95423 10.477382,-47.03585 19.253302,-45.42492 8.51476,1.56299 12.57198,46.12146 27.75558,44.31269 7.70474,-0.91784 20.01688,-32.60472 24.24442,-32.31269 5.9068,0.40803 16.94245,32.41009 25.43127,38.43157 8.48883,6.02148 24.30709,-25.21315 30.56873,-23.43157 4.86495,1.38418 5.32311,47.12483 9.68204,48.40557 61.23259,17.9914 42.20149,51.99845 9.32236,72.67875 -5.7104,3.5917 11.34454,-26.19149 8.6371,-33.11738 -4.66883,-11.94333 -27.04998,-17.68367 -40.13721,-17.84449 1.66094,15.30252 1.87328,32.14857 1.49571,42.87757 l -20,0 c 0.2005,-21.0189 0.99709,-39.10928 -4.68823,-45.07062 -2.94338,7.73117 -3.90163,16.74112 -4.31177,42.07062 l -18,0 c 2.31749,-11.1761 1.72191,-16.70198 -2.58494,-28.96651 -7.60577,4.9571 -13.84889,5.67484 -21.96322,5.07523 -7.16373,13.24228 2.39817,20.07058 1.54816,47.89128 l -20,0 c -0.25073,-27.055 -6.84383,-32.3007 -11.42649,-46.8766 -9.31016,11.2554 -15.045758,22.9361 -19.573512,44.8766 l -24.999998,0 c 2.90416,-11.2254 5.88278,-27.6793 22.5,-57.12851 -12.20938,-6.68422 -44.451962,-10.78247 -41.038802,7.96772 2.31607,12.72331 -6.64703,26.97319 -15.71609,26.87139 C 14.959508,1011.8958 7.6922377,993.90552 8.4761977,975.98386 10.736078,948.03398 26.763998,941.2782 61.964938,926.33319 z"
+       id="path3004-7-6-6-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cssssszsssscccccccccccccccscc" />
+    <path
+       style="fill:#c2c2c2;fill-opacity:1;stroke:none"
+       d="m 165.94461,866.40141 22.41193,171.74459 -33.41193,9.2554 -48.73084,-12.8297 z"
+       id="path3004-7-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:#e7e7e7;fill-opacity:1;stroke:none"
+       d="m 165.94461,866.40141 -11,180.99999 80.92713,-14.382 z"
+       id="path3004-7-6-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+  </g>
+</svg>

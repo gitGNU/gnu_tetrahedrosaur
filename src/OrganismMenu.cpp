@@ -21,6 +21,7 @@
 #include <QtCore/QtGlobal>
 
 
+static const char * _context = "OrganismMenu";
 static const char * _divideCell = QT_TRANSLATE_NOOP("OrganismMenu", "Divide cell");
 static const char * _menu = QT_TRANSLATE_NOOP("OrganismMenu", "Menu");
 static const char * _showInterior = QT_TRANSLATE_NOOP("OrganismMenu", "Show interior");
@@ -42,6 +43,7 @@ static const char * _tetrahedronCell = QT_TRANSLATE_NOOP("OrganismMenu", "Tetrah
 
 
 #include "OrganismMenu.hpp"
+#include "translation.hpp"
 
 
 OrganismMenu::OrganismMenu(QWidget * parent)
@@ -90,7 +92,7 @@ void OrganismMenu::setSelectionMode(QAction * action)
 void OrganismMenu::showInterior()
 {
    m_interiorShown = !m_interiorShown;
-   m_showInteriorAction->setText(tr(
+   m_showInteriorAction->setText(TSLC(
       m_interiorShown ? _hideInterior : _showInterior
    ));
    emit interiorShown(m_interiorShown);
@@ -100,7 +102,7 @@ void OrganismMenu::showInterior()
 void OrganismMenu::showNormals()
 {
    m_normalsShown = !m_normalsShown;
-   m_showNormalsAction->setText(tr(
+   m_showNormalsAction->setText(TSLC(
       m_normalsShown ? _hideNormals : _showNormals
    ));
    emit normalsShown(m_normalsShown);
@@ -109,11 +111,11 @@ void OrganismMenu::showNormals()
 
 void OrganismMenu::createMenuMenu()
 {
-   QAction * divideCellAction = new QAction(tr(_divideCell), this);
+   QAction * divideCellAction = new QAction(TSLC(_divideCell), this);
    divideCellAction->setShortcut(QKeySequence("s"));
    connect(divideCellAction, SIGNAL(triggered()), SIGNAL(cellDivided()));
 
-   QMenu * menu = addMenu(tr(_menu));
+   QMenu * menu = addMenu(TSLC(_menu));
    menu->addAction(divideCellAction);
 }
 
@@ -122,16 +124,16 @@ void OrganismMenu::createSelectionMenu()
 {
    QActionGroup * group = new QActionGroup(this);
 
-   m_vertexSelectionAction = new QAction(tr(_vertex), group);
+   m_vertexSelectionAction = new QAction(TSLC(_vertex), group);
    m_vertexSelectionAction->setCheckable(true);
 
-   m_edgeSelectionAction = new QAction(tr(_edge), group);
+   m_edgeSelectionAction = new QAction(TSLC(_edge), group);
    m_edgeSelectionAction->setCheckable(true);
 
-   m_triangleSelectionAction = new QAction(tr(_triangle), group);
+   m_triangleSelectionAction = new QAction(TSLC(_triangle), group);
    m_triangleSelectionAction->setCheckable(true);
 
-   m_tetrahedronSelectionAction = new QAction(tr(_tetrahedronCell), group);
+   m_tetrahedronSelectionAction = new QAction(TSLC(_tetrahedronCell), group);
    m_tetrahedronSelectionAction->setCheckable(true);
 
    group->addAction(m_vertexSelectionAction);
@@ -141,7 +143,7 @@ void OrganismMenu::createSelectionMenu()
 
    m_tetrahedronSelectionAction->setChecked(true);
 
-   QMenu * menu = addMenu(tr(_selection));
+   QMenu * menu = addMenu(TSLC(_selection));
    menu->addAction(m_vertexSelectionAction);
    menu->addAction(m_edgeSelectionAction);
    menu->addAction(m_triangleSelectionAction);
@@ -156,13 +158,13 @@ void OrganismMenu::createSelectionMenu()
 
 void OrganismMenu::createViewMenu()
 {
-   m_showInteriorAction = new QAction(tr(_showInterior), this);
+   m_showInteriorAction = new QAction(TSLC(_showInterior), this);
    connect(m_showInteriorAction, SIGNAL(triggered()), SLOT(showInterior()));
 
-   m_showNormalsAction = new QAction(tr(_showNormals), this);
+   m_showNormalsAction = new QAction(TSLC(_showNormals), this);
    connect(m_showNormalsAction, SIGNAL(triggered()), SLOT(showNormals()));
 
-   QMenu * menu = addMenu(tr(_view));
+   QMenu * menu = addMenu(TSLC(_view));
    menu->addAction(m_showInteriorAction);
    menu->addAction(m_showNormalsAction);
 }

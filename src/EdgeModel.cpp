@@ -25,10 +25,8 @@ static const char * _context = "EdgeModel";
 static const char * _equilibriumLength = QT_TRANSLATE_NOOP("EdgeModel", "equilibrium length");
 
 
-#include <QtCore/QCoreApplication>
-
-
 #include "EdgeModel.hpp"
+#include "translation.hpp"
 
 
 #include "bio/Organism.hpp"
@@ -98,10 +96,7 @@ QVariant EdgeModel::data(const QModelIndex & index, int role) const
                _SWITCH_COLUMN(QString("id"), static_cast<qulonglong>(*m_edge));
                break;
             case EP_EQUILIBRIUM_LENGTH:
-               _SWITCH_COLUMN(
-                  QCoreApplication::translate(_context, _equilibriumLength),
-                  edge.equilibriumLength
-               );
+               _SWITCH_COLUMN(TSLC(_equilibriumLength), edge.equilibriumLength);
                break;
          }
       }

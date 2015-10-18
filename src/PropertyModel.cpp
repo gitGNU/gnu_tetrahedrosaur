@@ -26,10 +26,8 @@ static const char * _property = QT_TRANSLATE_NOOP("PropertyModel", "Property");
 static const char * _value = QT_TRANSLATE_NOOP("PropertyModel", "Value");
 
 
-#include <QtCore/QCoreApplication>
-
-
 #include "PropertyModel.hpp"
+#include "translation.hpp"
 
 
 /***************************************************************************
@@ -66,9 +64,9 @@ QVariant PropertyModel::headerData(
       switch (section)
       {
          case CID_PROPERTY:
-            return QCoreApplication::translate(_context, _property);
+            return TSLC(_property);
          case CID_VALUE:
-            return QCoreApplication::translate(_context, _value);
+            return TSLC(_value);
       }
    }
    return QVariant();

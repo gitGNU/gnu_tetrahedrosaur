@@ -236,7 +236,8 @@ boost::optional<Tetrahedron> Mesh::makeTetrahedronBud(
    // This check will work for both states of helper->vNew;
    if (!ensureNoCollisionsForBud(
       helper->v0v1v2TriangleToBeDeleted,
-      helper->budTop
+      helper->budTop,
+      helper->vNew
    ))
    {
       return result;
@@ -875,7 +876,8 @@ void Mesh::helpEdgeBudding(
 
 bool Mesh::ensureNoCollisionsForBud(
    const dt::TriangleId & budBase,
-   const dt::Pointf3 & budTop
+   const dt::Pointf3 & budTop,
+   const boost::optional<dt::VertexId> & budTopIndex
 ) const
 {
    const DynamicVertex * dv = dynamicVertices();
@@ -892,6 +894,11 @@ bool Mesh::ensureNoCollisionsForBud(
       if (i != budBaseIndex)
       {
          const Triangle & t = m_triangles[i];
+         if (budTopIndex && t.contains(budTopIndex->get()))
+         {
+            continue;
+         }
+
          const dt::Pointf3 a = dv[t.a].point();
          const dt::Pointf3 b = dv[t.b].point();
          const dt::Pointf3 c = dv[t.c].point();

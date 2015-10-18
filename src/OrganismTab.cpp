@@ -40,6 +40,7 @@ static const char * _makeBud = QT_TRANSLATE_NOOP("OrganismTab", "Make bud");
 #include "OrganismTab.hpp"
 #include "OrganismViewport.hpp"
 #include "PropertyView.hpp"
+#include "translation.hpp"
 #include "TriangleModel.hpp"
 #include "VertexModel.hpp"
 
@@ -82,7 +83,7 @@ OrganismTab::OrganismTab(
       m_budButton->setIcon(
          QApplication::style()->standardIcon(QStyle::SP_MediaSeekForward)
       );
-      m_budButton->setText(QCoreApplication::translate(_context, _makeBud));
+      m_budButton->setText(TSLC(_makeBud));
       bottomToolBarLayout->addWidget(m_budButton);
    }
 
@@ -239,13 +240,13 @@ void OrganismTab::updatePlayPauseButton()
       m_playPauseButton->setIcon(
          QApplication::style()->standardIcon(QStyle::SP_MediaPlay)
       );
-      m_playPauseButton->setText(QCoreApplication::translate(_context, _start));
+      m_playPauseButton->setText(TSLC(_start));
    }
    else
    {
       m_playPauseButton->setIcon(
          QApplication::style()->standardIcon(QStyle::SP_MediaPause)
       );
-      m_playPauseButton->setText(QCoreApplication::translate(_context, _pause));
+      m_playPauseButton->setText(TSLC(_pause));
    }
 }

@@ -38,6 +38,7 @@ namespace bio {
 
 
 struct Config;
+struct MutationParams;
 struct OrganismDesc;
 
 
@@ -57,7 +58,8 @@ std::vector<boost::shared_ptr<OrganismDesc> > mate(
    const std::vector<boost::shared_ptr<const OrganismDesc> > & prevGeneration,
    OrganismDesc *(* createDesc)(),
    size_t nextGenerationSize,
-   boost::shared_ptr<const Config> config
+   boost::shared_ptr<const Config> config,
+   const MutationParams & mutationParams
 );
 
 

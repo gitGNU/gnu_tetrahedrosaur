@@ -29,12 +29,12 @@ static const char * _glewInitError = QT_TRANSLATE_NOOP("SharedGLWidget", "GLEW i
 #include <GL/glew.h>
 
 
-#include <QtCore/QCoreApplication>
 #include <QtCore/QString>
 #include <QtOpenGL/QGLFormat>
 
 
 #include "SharedGLWidget.hpp"
+#include "translation.hpp"
 
 
 #include "mesh/GLMesh.hpp"
@@ -88,7 +88,7 @@ void SharedGLWidget::initializeGL()
    if (!(QGLFormat::openGLVersionFlags() & QGLFormat::OpenGL_Version_3_2))
    {
       m_state = State::HasError;
-      m_errorText = QCoreApplication::translate(_context, _opengl32OrHigher);
+      m_errorText = TSLC(_opengl32OrHigher);
       return;
    }
 
@@ -97,7 +97,7 @@ void SharedGLWidget::initializeGL()
    {
       m_state = State::HasError;
       m_errorText = QString("%1: %2")
-         .arg(QCoreApplication::translate(_context, _glewInitError))
+         .arg(TSLC(_glewInitError))
          .arg(reinterpret_cast<const char *>(
             glewGetErrorString(glewInitResult))
          );

@@ -27,10 +27,8 @@ static const char * _volume = QT_TRANSLATE_NOOP("CellModel", "volume");
 static const char * _generation = QT_TRANSLATE_NOOP("CellModel", "generation");
 
 
-#include <QtCore/QCoreApplication>
-
-
 #include "CellModel.hpp"
+#include "translation.hpp"
 
 
 #include "bio/Cell.hpp"
@@ -126,14 +124,11 @@ QVariant CellModel::data(const QModelIndex & index, int role) const
             switch (row)
             {
                case CP_TETRAHEDRON:
-                  _SWITCH_COLUMN(
-                     QCoreApplication::translate(_context, _tetrahedron),
-                     QString("[...]")
-                  );
+                  _SWITCH_COLUMN(TSLC(_tetrahedron), QString("[...]"));
                   break;
                case CP_VOLUME:
                   _SWITCH_COLUMN(
-                     QCoreApplication::translate(_context, _volume),
+                     TSLC(_volume),
                      m_organism->mesh().tetrahedronVolume(*m_tetrahedron)
                   );
                   break;
@@ -141,9 +136,7 @@ QVariant CellModel::data(const QModelIndex & index, int role) const
                   switch (index.column())
                   {
                      case CID_PROPERTY:
-                        return QCoreApplication::translate(
-                           _context, _generation
-                        );
+                        return TSLC(_generation);
                      case CID_VALUE:
                         if (const bio::Cell * cell = // FIXME: find;
                            m_organism->tetrahedronsMap().findAny(*m_tetrahedron)

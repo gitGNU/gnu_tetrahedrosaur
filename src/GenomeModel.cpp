@@ -27,10 +27,8 @@ static const char * _right = QT_TRANSLATE_NOOP("GenomeModel", "Right");
 static const char * _match = QT_TRANSLATE_NOOP("GenomeModel", "Match");
 
 
-#include <QtCore/QCoreApplication>
-
-
 #include "GenomeModel.hpp"
+#include "translation.hpp"
 
 
 #include "algo/pairing_pair.hpp"
@@ -161,11 +159,11 @@ QVariant GenomeModel::headerData(
          switch (section)
          {
             case CID_LEFT:
-               return QCoreApplication::translate(_context, _left);
+               return TSLC(_left);
             case CID_RIGHT:
-               return QCoreApplication::translate(_context, _right);
+               return TSLC(_right);
             case CID_MATCH:
-               return QCoreApplication::translate(_context, _match);
+               return TSLC(_match);
          }
       }
    }

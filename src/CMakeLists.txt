@@ -29,17 +29,21 @@ set(HEADERS
    CellModel.hpp
    custom_enums.hpp
    Figure3D.hpp
+   GeneModel.hpp
    GenomeModel.hpp
    GenomeTab.hpp
    GuiOrganismDesc.hpp
    MainWindowTab.hpp
+   MutationParamsDialog.hpp
    Organism3D.hpp
    OrganismPixelBuffer.hpp
+   ProbabilitySpinBox.hpp
    PropertyModel.hpp
    PropertyView.hpp
    Scene.hpp
    SharedGLWidget.hpp
    tools3D.hpp
+   translation.hpp
    TriangleModel.hpp
    VertexModel.hpp
    Viewport.hpp
@@ -75,6 +79,7 @@ set(SOURCES
    EdgeModel.cpp
    Figure3D.cpp
    FigureViewport.cpp
+   GeneModel.cpp
    GenomeModel.cpp
    GenomeTab.cpp
    GenomeView.cpp
@@ -83,6 +88,7 @@ set(SOURCES
    MainWindowMenuBar.cpp
    MainWindowTab.cpp
    MatingWidget.cpp
+   MutationParamsDialog.cpp
    NewProjectDialog.cpp
    OffspringModel.cpp
    Organism3D.cpp
@@ -92,6 +98,7 @@ set(SOURCES
    OrganismViewport.cpp
    PopulationModel.cpp
    PopulationView.cpp
+   ProbabilitySpinBox.cpp
    Project.cpp
    ProjectLoadingDialog.cpp
    PropertyModel.cpp
@@ -101,6 +108,7 @@ set(SOURCES
    SharedGLWidget.cpp
    tetrahedrosaur.cpp
    tools3D.cpp
+   translation.cpp
    TriangleModel.cpp
    VertexModel.cpp
    Viewport.cpp

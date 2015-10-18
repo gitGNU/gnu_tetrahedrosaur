@@ -52,18 +52,20 @@ size_t _generate(
 void _init(
    bio::OrganismDesc & desc,
    boost::shared_ptr<const bio::Config> config,
+   const bio::MutationParams & mutationParams,
    const bio::OrganismDesc & left,
    const bio::OrganismDesc & right
 )
 {
    desc.initialConditions = bio::InitialConditions(
       left.initialConditions,
-      right.initialConditions
+      right.initialConditions,
+      mutationParams
    );
    desc.genome.reset(new bio::Genome(
       config,
-      left.genome->makeHaploid(),
-      right.genome->makeHaploid()
+      left.genome->makeHaploid(mutationParams),
+      right.genome->makeHaploid(mutationParams)
    ));
 }
 
@@ -71,15 +73,16 @@ void _init(
 void _init(
    bio::OrganismDesc & desc,
    boost::shared_ptr<const bio::Config> config,
+   const bio::MutationParams & mutationParams,
    const bio::OrganismDesc & left
 )
 {
    desc.initialConditions = left.initialConditions;
-   desc.initialConditions.applyMutations();
+   desc.initialConditions.applyMutations(mutationParams);
    desc.genome.reset(new bio::Genome(
       config,
-      left.genome->makeHaploid(),
-      left.genome->makeHaploid() // FIXME:;
+      left.genome->makeHaploid(mutationParams),
+      left.genome->makeHaploid(mutationParams) // FIXME:;
    ));
 }
 
@@ -137,7 +140,8 @@ std::vector<boost::shared_ptr<OrganismDesc> > mate(
    const std::vector<boost::shared_ptr<const OrganismDesc> > & prevGeneration,
    OrganismDesc *(* createDesc)(),
    size_t nextGenerationSize,
-   boost::shared_ptr<const Config> config
+   boost::shared_ptr<const Config> config,
+   const MutationParams & mutationParams
 )
 {
    assert(createDesc);
@@ -167,6 +171,7 @@ std::vector<boost::shared_ptr<OrganismDesc> > mate(
             _init(
                *desc,
                config,
+               mutationParams,
                *prevGeneration[pair.first],
                *prevGeneration[pair.second]
             );
@@ -179,7 +184,7 @@ std::vector<boost::shared_ptr<OrganismDesc> > mate(
          {
             OrganismDesc * desc = createDesc();
             assert(desc);
-            _init(*desc, config, *prevGeneration.front());
+            _init(*desc, config, mutationParams, *prevGeneration.front());
             nextGeneration.push_back(boost::shared_ptr<OrganismDesc>(desc));
          }
       }

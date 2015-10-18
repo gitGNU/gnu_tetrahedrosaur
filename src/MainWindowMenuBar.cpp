@@ -38,6 +38,7 @@ static const char * _aboutQt = QT_TRANSLATE_NOOP("MainWindowMenuBar", "About Qt"
 
 
 #include "MainWindowMenuBar.hpp"
+#include "translation.hpp"
 
 
 MainWindowMenuBar::MainWindowMenuBar(QWidget * parent)
@@ -53,63 +54,45 @@ MainWindowMenuBar::MainWindowMenuBar(QWidget * parent)
 
 void MainWindowMenuBar::createFileMenu()
 {
-   QAction * newProjectAction = new QAction(
-      QCoreApplication::translate(_context, _newProject),
-      this
-   );
+   QAction * newProjectAction = new QAction(TSLC(_newProject), this);
    connect(
       newProjectAction,
       SIGNAL(triggered()),
       SIGNAL(newProjectRequested())
    );
 
-   QAction * openProjectAction = new QAction(
-      QCoreApplication::translate(_context, _openProject),
-      this
-   );
+   QAction * openProjectAction = new QAction(TSLC(_openProject), this);
    connect(
       openProjectAction,
       SIGNAL(triggered()),
       SIGNAL(openProjectRequested())
    );
 
-   QAction * closeProjectAction = new QAction(
-      QCoreApplication::translate(_context, _closeProject),
-      this
-   );
+   QAction * closeProjectAction = new QAction(TSLC(_closeProject), this);
    connect(
       closeProjectAction,
       SIGNAL(triggered()),
       SIGNAL(closeProjectRequested())
    );
 
-   m_saveProjectAction = new QAction(
-      QCoreApplication::translate(_context, _saveProject),
-      this
-   );
+   m_saveProjectAction = new QAction(TSLC(_saveProject), this);
    connect(
       m_saveProjectAction,
       SIGNAL(triggered()),
       SIGNAL(saveProjectRequested())
    );
 
-   m_saveProjectAsAction = new QAction(
-      QCoreApplication::translate(_context, _saveProjectAs),
-      this
-   );
+   m_saveProjectAsAction = new QAction(TSLC(_saveProjectAs), this);
    connect(
       m_saveProjectAsAction,
       SIGNAL(triggered()),
       SIGNAL(saveProjectAsRequested())
    );
 
-   QAction * exitAction = new QAction(
-      QCoreApplication::translate(_context, _exit),
-      this
-   );
+   QAction * exitAction = new QAction(TSLC(_exit), this);
    connect(exitAction, SIGNAL(triggered()), SIGNAL(exitRequested()));
 
-   QMenu * menu = addMenu(QCoreApplication::translate(_context, _file));
+   QMenu * menu = addMenu(TSLC(_file));
    menu->addAction(newProjectAction);
    menu->addAction(openProjectAction);
    menu->addAction(closeProjectAction);
@@ -123,19 +106,13 @@ void MainWindowMenuBar::createFileMenu()
 
 void MainWindowMenuBar::createHelpMenu()
 {
-   QAction * aboutAction = new QAction(
-      QCoreApplication::translate(_context, _about),
-      this
-   );
+   QAction * aboutAction = new QAction(TSLC(_about), this);
    connect(aboutAction, SIGNAL(triggered()), SIGNAL(aboutRequested()));
 
-   QAction * aboutQtAction = new QAction(
-      QCoreApplication::translate(_context, _aboutQt),
-      this
-   );
+   QAction * aboutQtAction = new QAction(TSLC(_aboutQt), this);
    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-   QMenu * menu = addMenu(QCoreApplication::translate(_context, _help));
+   QMenu * menu = addMenu(TSLC(_help));
    menu->addAction(aboutAction);
    menu->addAction(aboutQtAction);
 }

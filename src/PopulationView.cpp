@@ -42,6 +42,7 @@ static const char * _openGenomeInNewTab = QT_TRANSLATE_NOOP("PopulationView", "O
 #include "GuiOrganismDesc.hpp"
 #include "PopulationModel.hpp"
 #include "PopulationView.hpp"
+#include "translation.hpp"
 
 
 #include "mesh/Figure.hpp"
@@ -260,11 +261,11 @@ PopulationView::PopulationView(QWidget * parent)
 
    m_contextMenu = new QMenu(this);
    m_contextMenu->addAction(
-      QCoreApplication::translate(_context, _openOrganismInNewTab),
+      TSLC(_openOrganismInNewTab),
       this, SLOT(openOrganism())
    );
    m_contextMenu->addAction(
-      QCoreApplication::translate(_context, _openGenomeInNewTab),
+      TSLC(_openGenomeInNewTab),
       this, SLOT(openGenome())
    );
 }

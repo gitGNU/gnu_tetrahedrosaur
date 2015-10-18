@@ -25,6 +25,7 @@
 
 #include "Config.hpp"
 #include "InstructionSet.hpp"
+#include "MutationParams.hpp"
 
 
 namespace bio {
@@ -96,10 +97,15 @@ size_t Instruction::instructionCount()
 }
 
 
-Instruction Instruction::mutated() const
+Instruction Instruction::mutated(const MutationParams & params) const
 {
    uint32_t raw = (m_u16 << 16) | (m_u8 << 8) | m_cmd;
-   const uint32_t mask = (0x00000001 << (rand() % 32));
+   uint32_t mask = 0;
+   const size_t count = 1 + (rand() % params.maxInstructionBitFlips);
+   for (size_t i = 0; i < count; ++i)
+   {
+      mask |= (0x00000001 << (rand() % 32));
+   }
    raw = raw ^ mask; // Invert bit;
    return Instruction(raw, raw << 8, raw << 16);
 }

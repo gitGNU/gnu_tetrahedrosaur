@@ -26,6 +26,7 @@
 
 
 #include "ChromosomeDiffModel.hpp"
+#include "GeneModel.hpp"
 #include "GenomeModel.hpp"
 #include "GenomeTab.hpp"
 #include "GenomeView.hpp"
@@ -36,36 +37,41 @@
 
 
 GenomeTab::GenomeTab(QWidget * parent)
-   : MainWindowTab(parent),
-   m_genomeModel(0),
-   m_chromosomeDiffView(0),
-   m_chromosomeDiffModel(0)
+   : MainWindowTab(parent), m_genomeModel(0), m_geneModel(0)
 {
    m_genomeModel = new GenomeModel(this);
+   m_geneModel = new GeneModel(this);
 
-   m_chromosomeDiffModel = new ChromosomeDiffModel(Qt::Vertical, this);
+   ChromosomeDiffModel * chromosomeDiffModel =
+      new ChromosomeDiffModel(Qt::Vertical, this);
 
    GenomeView * genomeView = new GenomeView(this);
    genomeView->setModel(m_genomeModel);
 
-   m_chromosomeDiffView = new QTableView(this);
-   m_chromosomeDiffView->setShowGrid(false);
-   m_chromosomeDiffView->horizontalHeader()->show();
-   m_chromosomeDiffView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-   m_chromosomeDiffView->verticalHeader()->hide();
-   m_chromosomeDiffView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+   QTableView * chromosomeDiffView = new QTableView(this);
+   chromosomeDiffView->setShowGrid(false);
+   chromosomeDiffView->horizontalHeader()->show();
+   chromosomeDiffView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+   chromosomeDiffView->verticalHeader()->hide();
+   chromosomeDiffView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+   chromosomeDiffView->setModel(chromosomeDiffModel);
 
-   m_chromosomeDiffView->setModel(m_chromosomeDiffModel);
+   QTableView * geneView = new QTableView(this);
+   geneView->horizontalHeader()->show();
+   geneView->verticalHeader()->hide();
+   geneView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+   geneView->setModel(m_geneModel);
 
    QHBoxLayout * layout = new QHBoxLayout(this);
    layout->addWidget(genomeView, 1);
-   layout->addWidget(m_chromosomeDiffView, 1);
+   layout->addWidget(chromosomeDiffView, 1);
+   layout->addWidget(geneView, 2);
 
    connect(genomeView, SIGNAL(selectionChanged(
          boost::shared_ptr<const bio::Genome>,
          const boost::optional<dt::ChromosomeId> &,
          const boost::optional<dt::ChromosomeId> &)),
-      m_chromosomeDiffModel, SLOT(setChromosomes(
+      chromosomeDiffModel, SLOT(setChromosomes(
          boost::shared_ptr<const bio::Genome>,
          const boost::optional<dt::ChromosomeId> &,
          const boost::optional<dt::ChromosomeId> &))
@@ -83,6 +89,7 @@ void GenomeTab::setOrganismDesc(boost::shared_ptr<const GuiOrganismDesc> desc)
    if (desc)
    {
       m_genomeModel->setGenome(desc->genome);
+      m_geneModel->setGenome(desc->genome);
       std::cout << *desc << std::endl;
    }
 }

@@ -25,11 +25,8 @@
 #include <boost/shared_ptr.hpp>
 
 
-QT_FORWARD_DECLARE_CLASS(QTableView)
-
-
 #include "MainWindowTab.hpp"
-class ChromosomeDiffModel;
+class GeneModel;
 class GenomeModel;
 struct GuiOrganismDesc;
 
@@ -44,8 +41,7 @@ class GenomeTab : public MainWindowTab
 
    private:
       GenomeModel * m_genomeModel;
-      QTableView * m_chromosomeDiffView;
-      ChromosomeDiffModel * m_chromosomeDiffModel;
+      GeneModel * m_geneModel;
 };
 
 

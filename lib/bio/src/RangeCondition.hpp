@@ -22,6 +22,11 @@
 #define BIO_RANGECONDITION_HPP
 
 
+#include <ostream>
+#include <sstream>
+#include <string>
+
+
 #include <boost/optional.hpp>
 
 
@@ -44,11 +49,18 @@ class RangeCondition
       );
       bool isAcceptable(const T & value) const;
       bool isAlwaysAcceptable() const;
+      std::string toString() const;
+      inline boost::optional<T> greaterOrEqual() const {return m_greaterOrEqual;}
+      inline boost::optional<T> lessOrEqual() const {return m_lessOrEqual;}
 
    private:
       boost::optional<T> m_greaterOrEqual;
       boost::optional<T> m_lessOrEqual;
 };
+
+
+template <typename T>
+std::ostream & operator<<(std::ostream & os, const RangeCondition<T> & rc);
 
 
 /***************************************************************************
@@ -98,6 +110,43 @@ template <typename T>
 bool RangeCondition<T>::isAlwaysAcceptable() const
 {
    return (!m_greaterOrEqual && !m_lessOrEqual);
+}
+
+
+template <typename T>
+std::string RangeCondition<T>::toString() const
+{
+   std::ostringstream stream;
+   stream << *this;
+   return stream.str();
+}
+
+
+template <typename T>
+std::ostream & operator<<(std::ostream & os, const RangeCondition<T> & rc)
+{
+   const boost::optional<T> ge = rc.greaterOrEqual();
+   const boost::optional<T> le = rc.lessOrEqual();
+   if (ge && le)
+   {
+      if (*ge > *le)
+      {
+         os << "(.., " << *le << "] || [" << *ge << ", ..)";
+      }
+      else
+      {
+         os << "[" << *ge << ", " << *le << "]";
+      }
+   }
+   else if (ge)
+   {
+      os << "[" << *ge << ", ..)";
+   }
+   else if (le)
+   {
+      os << "(.., " << *le << "]";
+   }
+   return os;
 }
 
 

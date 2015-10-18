@@ -27,7 +27,6 @@ static const char * _projectName = QT_TRANSLATE_NOOP("NewProjectDialog", "Projec
 static const char * _untitled = QT_TRANSLATE_NOOP("NewProjectDialog", "untitled");
 
 
-#include <QtCore/QCoreApplication>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLineEdit>
@@ -36,6 +35,7 @@ static const char * _untitled = QT_TRANSLATE_NOOP("NewProjectDialog", "untitled"
 
 
 #include "NewProjectDialog.hpp"
+#include "translation.hpp"
 
 
 /***************************************************************************
@@ -46,10 +46,10 @@ static const char * _untitled = QT_TRANSLATE_NOOP("NewProjectDialog", "untitled"
 NewProjectDialog::NewProjectDialog(QWidget * parent)
    : QDialog(parent, Qt::Dialog), m_projectName(0), m_buttonBox(0)
 {
-   setWindowTitle(QCoreApplication::translate(_context, _newProject));
+   setWindowTitle(TSLC(_newProject));
 
    m_projectName = new QLineEdit(this);
-   m_projectName->setText(QCoreApplication::translate(_context, _untitled));
+   m_projectName->setText(TSLC(_untitled));
 
    m_buttonBox = new QDialogButtonBox(
       QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -58,10 +58,7 @@ NewProjectDialog::NewProjectDialog(QWidget * parent)
    );
 
    QFormLayout * formLayout = new QFormLayout();
-   formLayout->addRow(
-      QCoreApplication::translate(_context, _projectName),
-      m_projectName
-   );
+   formLayout->addRow(TSLC(_projectName), m_projectName);
 
    QVBoxLayout * layout = new QVBoxLayout(this);
    layout->addLayout(formLayout);

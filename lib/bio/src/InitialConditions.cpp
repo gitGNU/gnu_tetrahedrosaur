@@ -23,6 +23,7 @@
 
 
 #include "InitialConditions.hpp"
+#include "MutationParams.hpp"
 
 
 namespace {
@@ -36,19 +37,6 @@ int16_t _mean(int16_t a, int16_t b)
    return static_cast<int16_t>(m);
 }
 
-
-void _applyMutations(int16_t & value)
-{
-   const int r = rand() % 100;
-   if (r < 1)
-   {
-      --value;
-   }
-   else if (r < 2)
-   {
-      ++value;
-   }
-}
 
 } // anonymous namespace;
 
@@ -64,7 +52,8 @@ InitialConditions::InitialConditions()
 
 InitialConditions::InitialConditions(
    const InitialConditions & left,
-   const InitialConditions & right
+   const InitialConditions & right,
+   const MutationParams & mutationParams
 ) : cellLimit(0),
    x(_mean(left.x, right.x)),
    y(_mean(left.y, right.y))
@@ -72,16 +61,16 @@ InitialConditions::InitialConditions(
    const uint32_t m = (left.cellLimit + right.cellLimit) / 2;
    cellLimit = static_cast<uint16_t>(m);
 
-   applyMutations();
+   applyMutations(mutationParams);
 }
 
 
-void InitialConditions::applyMutations()
+void InitialConditions::applyMutations(const MutationParams & params)
 {
    // Modify cellLimit;
-   if ((rand() % 100) < 5)
+   if (params.cellLimitMutation.random())
    {
-      uint16_t delta = rand() % 10;
+      uint16_t delta = 1 + (rand() % params.maxCellLimitDelta);
       if (rand() % 2)
       {
          if ((std::numeric_limits<uint16_t>::max() - cellLimit) > delta)
@@ -107,8 +96,11 @@ void InitialConditions::applyMutations()
    }
 
    // Modify x and y;
-   _applyMutations(x);
-   _applyMutations(y);
+   if (params.initialCoordMutation.random())
+   {
+      x += (1 - (rand() % 3));
+      y += (1 - (rand() % 3));
+   }
 }
 
 

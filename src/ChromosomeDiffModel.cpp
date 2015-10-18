@@ -26,11 +26,11 @@ static const char * _left = QT_TRANSLATE_NOOP("ChromosomeDiffModel", "Left");
 static const char * _right = QT_TRANSLATE_NOOP("ChromosomeDiffModel", "Right");
 
 
-#include <QtCore/QCoreApplication>
 #include <QtGui/QColor>
 
 
 #include "ChromosomeDiffModel.hpp"
+#include "translation.hpp"
 
 
 #include "algo/Alignment.hpp"
@@ -175,9 +175,9 @@ QVariant ChromosomeDiffModel::headerData(
          switch (section)
          {
             case RCID_LEFT:
-               return QCoreApplication::translate(_context, _left);
+               return TSLC(_left);
             case RCID_RIGHT:
-               return QCoreApplication::translate(_context, _right);
+               return TSLC(_right);
          }
       }
    }

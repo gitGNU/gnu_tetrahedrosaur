@@ -50,6 +50,8 @@ class Application : public QApplication
       static boost::shared_ptr<Project> project();
       static void setProject(boost::shared_ptr<Project> project);
 
+      MainWindow * mainWindow() const;
+
       void addOrganismTab(boost::shared_ptr<const GuiOrganismDesc> desc);
       void addGenomeTab(boost::shared_ptr<const GuiOrganismDesc> desc);
 

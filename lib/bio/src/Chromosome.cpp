@@ -24,6 +24,7 @@
 
 
 #include "Chromosome.hpp"
+#include "MutationParams.hpp"
 
 
 namespace bio {
@@ -51,20 +52,25 @@ Chromosome::Chromosome(std::initializer_list<Instruction> list)
 }
 
 
-void Chromosome::applyMutations()
+void Chromosome::applyMutations(const MutationParams & params)
 {
    std::vector<Instruction> newCode;
    newCode.reserve(m_code.size());
    for (const Instruction & instr : m_code)
    {
-      if ((rand() % 100) < 5)
+      if (params.instructionInsertion.random())
       {
          newCode.push_back(Instruction(rand(), rand(), rand()));
       }
-      newCode.push_back(((rand() % 100) < 5) ? instr.mutated() : instr);
+      if (!params.instructionDeletion.random())
+      {
+         newCode.push_back(params.instructionMutation.random() ?
+            instr.mutated(params) : instr
+         );
+      }
    }
 
-   if ((rand() % 100) < 5)
+   if (params.instructionInsertion.random())
    {
       newCode.push_back(Instruction(rand(), rand(), rand()));
    }

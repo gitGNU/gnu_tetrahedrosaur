@@ -44,6 +44,7 @@ namespace bio {
 
 
 struct Config;
+struct MutationParams;
 
 
 /***************************************************************************
@@ -54,7 +55,10 @@ struct Config;
 class Genome
 {
    public:
-      explicit Genome(boost::shared_ptr<const Config> config);
+      explicit Genome(
+         boost::shared_ptr<const Config> config,
+         const MutationParams & mutationParams
+      );
       explicit Genome(
          boost::shared_ptr<const Config> config,
          const std::vector<Chromosome> & diploid
@@ -77,7 +81,9 @@ class Genome
       inline const std::vector<algo::pairing::Pair<float> > & pairs() const;
       inline const std::vector<Gene> & genes() const;
 
-      std::vector<Chromosome> makeHaploid() const;
+      std::vector<Chromosome> makeHaploid(
+         const MutationParams & mutationParams
+      ) const;
 
    private:
       void initializeGenes();

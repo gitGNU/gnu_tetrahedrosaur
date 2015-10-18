@@ -1,5 +1,13 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
+   <file>egg_custom.png</file>
+   <file>egg_high.png</file>
+   <file>egg_low.png</file>
+   <file>egg_medium.png</file>
    <file>swap.png</file>
+   <file>Tetrahedrosaur_24x24.png</file>
+   <file>Tetrahedrosaur_32x32.png</file>
+   <file>Tetrahedrosaur_64x64.png</file>
+   <file>Tetrahedrosaur_128x128.png</file>
 </qresource>
 </RCC>

@@ -25,7 +25,6 @@ static const char * _context = "ProjectLoadingDialog";
 static const char * _loadingProject = QT_TRANSLATE_NOOP("ProjectLoadingDialog", "Loading project...");
 
 
-#include <QtCore/QCoreApplication>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QVBoxLayout>
@@ -34,6 +33,7 @@ static const char * _loadingProject = QT_TRANSLATE_NOOP("ProjectLoadingDialog", 
 #include "DevelopmentEngine.hpp"
 #include "Project.hpp"
 #include "ProjectLoadingDialog.hpp"
+#include "translation.hpp"
 
 
 /***************************************************************************
@@ -50,7 +50,7 @@ ProjectLoadingDialog::ProjectLoadingDialog(
    m_engine(0),
    m_project(project)
 {
-   setWindowTitle(QCoreApplication::translate(_context, _loadingProject));
+   setWindowTitle(TSLC(_loadingProject));
 
    m_progressBar = new QProgressBar(this);
    m_progressBar->setRange(0, 100);

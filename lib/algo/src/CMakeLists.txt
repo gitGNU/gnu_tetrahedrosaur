@@ -21,12 +21,14 @@ set(HEADERS
    distance.hpp
    pairing.hpp
    pairing_pair.hpp
+   Probability.hpp
    random_generators.hpp
    roommates.hpp
 )
 
 set(SOURCES
    Alignment.cpp
+   Probability.cpp
    random_generators.cpp
    roommates.cpp
 )

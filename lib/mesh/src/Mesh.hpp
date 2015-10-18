@@ -169,7 +169,8 @@ class Mesh
       );
       bool ensureNoCollisionsForBud(
          const dt::TriangleId & budBase,
-         const dt::Pointf3 & budTop
+         const dt::Pointf3 & budTop,
+         const boost::optional<dt::VertexId> & budTopIndex
       ) const;
       dt::VertexId createBudTopVertex(
          const dt::VertexId & v0,

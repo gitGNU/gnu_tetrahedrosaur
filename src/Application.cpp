@@ -32,6 +32,7 @@ static const char * _tetrahedrosaur = QT_TRANSLATE_NOOP("Application", "Tetrahed
 #include "MainWindow.hpp"
 #include "Project.hpp"
 #include "SharedGLWidget.hpp"
+#include "translation.hpp"
 
 
 /***************************************************************************
@@ -42,6 +43,12 @@ static const char * _tetrahedrosaur = QT_TRANSLATE_NOOP("Application", "Tetrahed
 Application::Application(int & argc, char ** argv)
    : QApplication(argc, argv), m_initializationTimer(0)
 {
+   QIcon icon;
+   icon.addFile(":/Tetrahedrosaur_24x24.png", QSize(24, 24));
+   icon.addFile(":/Tetrahedrosaur_32x32.png", QSize(32, 32));
+   icon.addFile(":/Tetrahedrosaur_64x64.png", QSize(64, 64));
+   icon.addFile(":/Tetrahedrosaur_128x128.png", QSize(128, 128));
+   setWindowIcon(icon);
    m_initializationTimer = startTimer(0);
 }
 
@@ -67,6 +74,12 @@ boost::shared_ptr<Project> Application::project()
 void Application::setProject(boost::shared_ptr<Project> project)
 {
    reinterpret_cast<Application *>(qApp)->m_project = project;
+}
+
+
+MainWindow * Application::mainWindow() const
+{
+   return m_mainWindow;
 }
 
 
@@ -104,11 +117,7 @@ void Application::initialize()
    SharedGLWidget * gl = SharedGLWidget::instance();
    if (gl->hasError())
    {
-      QMessageBox::critical(
-         0,
-         QCoreApplication::translate(_context, _tetrahedrosaur),
-         gl->errorText()
-      );
+      QMessageBox::critical(0, TSLC(_tetrahedrosaur), gl->errorText());
       quit();
       return;
    }
